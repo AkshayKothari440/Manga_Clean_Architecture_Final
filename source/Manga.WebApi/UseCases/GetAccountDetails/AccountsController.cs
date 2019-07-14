@@ -25,7 +25,7 @@ namespace Manga.WebApi.UseCases.GetAccountDetails
         /// Get an account balance
         /// </summary>
         [HttpGet("{accountId}", Name = "GetAccount")]
-        public async Task<IActionResult> Get(Guid accountId)
+        public async Task<IActionResult> Get(string accountId)
         {
             await _getAccountDetailsUseCase.Execute(new Input(accountId));
             return _presenter.ViewModel;

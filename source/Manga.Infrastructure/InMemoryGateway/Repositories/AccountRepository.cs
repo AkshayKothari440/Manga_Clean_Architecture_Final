@@ -42,6 +42,11 @@
             return await Task.FromResult<Account>(account);
         }
 
+        public async Task<Guid> GetAccountId(Guid customerId)
+        {
+            return _context.Accounts.SingleOrDefault(a => a.CustomerId == customerId).Id;
+        }
+
         public async Task Update(IAccount account, ICredit credit)
         {
             Account accountOld = _context.Accounts

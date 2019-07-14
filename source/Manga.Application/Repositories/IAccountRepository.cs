@@ -11,5 +11,6 @@ namespace Manga.Application.Repositories
         Task Update(IAccount account, ICredit credit);
         Task Update(IAccount account, IDebit debit);
         Task Delete(IAccount account);
+        Task<Guid> GetAccountId(Guid customerId);
     }
 }

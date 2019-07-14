@@ -5,10 +5,10 @@ namespace Manga.Application.Boundaries.Withdraw
 
     public sealed class Input
     {
-        public Guid AccountId { get; }
+        public string AccountId { get; }
         public PositiveAmount Amount { get; }
 
-        public Input(Guid accountId, PositiveAmount amount)
+        public Input(string accountId, PositiveAmount amount)
         {
             AccountId = accountId;
             Amount = amount;

@@ -4,9 +4,9 @@ namespace Manga.Application.Boundaries.GetCustomerDetails
 
     public sealed class Input
     {
-        public Guid CustomerId { get; }
+        public string CustomerId { get; }
 
-        public Input(Guid customerId)
+        public Input(string customerId)
         {
             CustomerId = customerId;
         }

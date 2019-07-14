@@ -4,9 +4,9 @@ namespace Manga.Application.Boundaries.CloseAccount
 
     public sealed class Input
     {
-        public Guid AccountId { get; }
+        public string AccountId { get; }
 
-        public Input(Guid accountId)
+        public Input(string accountId)
         {
             AccountId = accountId;
         }

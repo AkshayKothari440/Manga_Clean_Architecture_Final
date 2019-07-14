@@ -8,6 +8,8 @@ namespace Manga.Application.UseCases
     using Manga.Domain.Accounts;
     using Manga.Domain.Customers;
     using Manga.Application.Service;
+    using Manga.Application.Services;
+    using Manga.Application.Common;
 
     public sealed class GetCustomerDetails : IUseCase
     {
@@ -15,26 +17,35 @@ namespace Manga.Application.UseCases
         private readonly IRegisterUserService registerUserService;
         //private readonly ICustomerRepository _customerRepository;
         private readonly IAccountRepository _accountRepository;
-
+        private readonly ILoginUserService _loginUserService;
         public GetCustomerDetails(
             IOutputHandler outputHandler,
             IRegisterUserService registerUserService,
             //ICustomerRepository customerRepository,
-            IAccountRepository accountRepository)
+            IAccountRepository accountRepository,
+            ILoginUserService loginUserService)
         {
             _outputHandler = outputHandler;
             this.registerUserService = registerUserService;
             //_customerRepository = customerRepository;
             _accountRepository = accountRepository;
+            _loginUserService = loginUserService;
         }
 
         public async Task Execute(Input input)
         {
-            ICustomer customer = await registerUserService.GetCustomer(input.CustomerId);
+            Guid CustomerId;
+            var result = CommonAccess.GetAccessCustomer(input.CustomerId, _accountRepository, _loginUserService).Result.ToString();
+            if (!Guid.TryParse(result, out CustomerId))
+            {
+                _outputHandler.Error(result);
+                return;
+            }
+            ICustomer customer = await registerUserService.GetCustomer(CustomerId);
 
             if (customer == null)
             {
-                _outputHandler.Error($"The customer {input.CustomerId} does not exists or is not processed yet.");
+                _outputHandler.Error($"The customer {CustomerId} does not exists or is not processed yet.");
                 return;
             }
 
